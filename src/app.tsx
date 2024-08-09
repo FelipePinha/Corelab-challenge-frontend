@@ -124,11 +124,89 @@ export function App() {
               </div>
               <div className="flex flex-col space-y-1">
                 <label>Descrição</label>
-                <textarea className="border-2 px-2 h-28 rounded-md text-md w-full outline-none resize-none p-3" placeholder="conte mais sobre..."></textarea>
+                <textarea className="border-2 px-2 h-36 rounded-md text-md w-full outline-none resize-none p-3" placeholder="conte mais sobre..."></textarea>
+              </div>
+
+              <div className="space-y-2">
+                <p>Escolha uma cor (opcional)</p>
+                <div className="grid grid-cols-6 md:grid-cols-9 lg:grid-cols-12 space-3">
+                  <label htmlFor="color-1" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-1" value="light-blue"/>
+                    <div className="w-10 h-10 rounded-full bg-light-blue peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
+                  </label>
+
+                  <label htmlFor="color-2" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-2" value="light-green"/>
+                    <div className="w-10 h-10 rounded-full bg-light-green peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
+                  </label>
+
+                  <label htmlFor="color-3" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-3" value="light-yellow"/>
+                    <div className="w-10 h-10 rounded-full bg-light-yellow peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
+                  </label>
+
+                  <label htmlFor="color-4" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-4" value="peach-pink"/>
+                    <div className="w-10 h-10 rounded-full bg-peach-pink peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
+                  </label>
+
+                  <label htmlFor="color-5" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-5" value="pale-pink"/>
+                    <div className="w-10 h-10 rounded-full bg-pale-pink cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
+                  </label>
+
+                  <label htmlFor="color-6" className="cursor-pointer w-12 flex justify-center">
+                    <input className='hidden peer' type="radio" name="color-radio" id="color-6" value="sky-blue"/>
+                    <div className="w-10 h-10 rounded-full bg-sky-blue cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-7" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-7" value="lavender-pink"/>
+                      <div className="w-10 h-10 rounded-full bg-lavender-pink cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-8" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-8" value="lemon-green"/>
+                      <div className="w-10 h-10 rounded-full bg-lemon-green cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-9" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-9" value="light-orange"/>
+                      <div className="w-10 h-10 rounded-full bg-light-orange cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-10" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-10" value="light-silver"/>
+                      <div className="w-10 h-10 rounded-full bg-light-silver cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-11" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-11" value="neutral-gray"/>
+                      <div className="w-10 h-10 rounded-full bg-neutral-gray cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                  <label htmlFor="color-12" className="cursor-pointer w-12 flex justify-center">
+                      <input className='hidden peer' type="radio" name="color-radio" id="color-12" value="sandy-brown"/>
+                      <div className="w-10 h-10 rounded-full bg-sandy-brown cursor-pointer peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1" />
+                  </label>
+
+                </div>
+              </div>
+
+              <div>
+                <p>Favoritar</p>
+
+                <div>
+                  <label htmlFor="favorite" className="cursor-pointer">
+                    <input className="hidden peer" type="checkbox" name="favorite" id="favorite"/>
+                    <img src="star.svg" className="peer-checked:hidden"/>
+                    <img src="star_full.svg" className="hidden peer-checked:block"/>
+                  </label>
+                </div>
               </div>
 
               <div className="text-end">
-                <button className="bg-blue-400 text-white px-8 py-2 rounded-lg">Criar</button>
+                <button className="bg-blue-500 text-white px-8 py-2 rounded-lg hover:bg-blue-400 transition duration-100">Criar</button>
               </div>
             </div>
           </div>
