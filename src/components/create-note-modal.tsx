@@ -27,7 +27,9 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
     event.preventDefault()
 
     const res = await api.post('/todos/create', formData)
-    console.log(res.data)          
+    console.log(res.data)
+    
+    closeCreateNoteModal()
   }
 
   return (

@@ -1,10 +1,24 @@
+import { useMutation } from "@tanstack/react-query";
 import { Todo } from "../types/todo";
+import { queryClient } from "../lib/react-query";
+import { api } from "../lib/axios";
 
 interface NoteCardProps {
     todo: Todo
 }
 
 export function NoteCard({todo}: NoteCardProps) {
+    const mutation = useMutation({
+        mutationFn: deleteTodo,
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['todos']})
+        }
+    })
+
+    async function deleteTodo() {
+        await api.delete(`/todos/${todo.id}/delete`)
+    }
+
     return (
         <div className="flex flex-col h-80 bg-white rounded-lg shadow-md">
             <div className="flex justify-between items-center border-b border-b-zinc-400 p-3">
@@ -25,14 +39,14 @@ export function NoteCard({todo}: NoteCardProps) {
             <div className="flex justify-between items-center px-3 py-2">
                 <div className="flex items-center gap-2">
                     <button>
-                        <img src="pencil.svg" alt="Editar" />
+                        <img src="pencil.svg" />
                     </button>
                     <button>
-                        <img src="color_picker.svg" alt="Selecionar Cor" />
+                        <img src="color_picker.svg" />
                     </button>
                 </div>
-                <button>
-                    <img src="x.svg" alt="Excluir" />
+                <button onClick={() => mutation.mutate()}>
+                    <img src="x.svg" />
                 </button>
             </div>
         </div>
