@@ -1,6 +1,9 @@
 import { useState } from "react"
 import { CreateNoteModal } from "./components/create-note-modal"
 import { NoteCard } from "./components/note-card"
+import { api } from "./lib/axios"
+import { useQuery } from "@tanstack/react-query"
+import { Todo } from "./types/todo"
 
 export function App() {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
@@ -12,6 +15,18 @@ export function App() {
   function closeCreateNoteModal() {
     setIsCreateNoteModalOpen(false)
   }
+
+  async function getTodos() {
+    const res = await api.get('/todos')
+    const data = res.data
+
+    return data.data
+  }
+
+  const { data } = useQuery({
+    queryFn: getTodos,
+    queryKey: ['todos']
+  })
 
   return (
     <div>
@@ -27,7 +42,7 @@ export function App() {
           </div>
         </header>
 
-        <main className="max-w-7xl mx-auto space-y-6 px-3">
+        <main className="max-w-7xl mx-auto space-y-6 p-3">
             <section className="w-full">
               <button onClick={openCreateNoteModal} className="w-full flex justify-center">
                 <div className="flex flex-col rounded-lg w-full shadow-sm bg-white space-y-3">
@@ -47,16 +62,32 @@ export function App() {
             <section className="space-y-2">
               <h2 className="text-zinc-500 text-sm">Favoritas</h2>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <NoteCard />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {
+                  data?.map((todo: Todo) => {
+                    if(todo.favorite) {
+                      return (
+                        <NoteCard todo={todo} key={todo.id}/>
+                      )
+                    }
+                  })
+                }
               </div>
             </section>
             
             <section className="space-y-2">
               <h2 className="text-zinc-500 text-sm">Outras</h2>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <NoteCard />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {
+                  data?.map((todo: Todo) => {
+                    if(!todo.favorite) {
+                      return (
+                        <NoteCard todo={todo} key={todo.id}/>
+                      )
+                    }
+                  })
+                }
               </div>
             </section>
         </main>
