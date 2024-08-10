@@ -26,8 +26,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   async function postTodo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    const res = await api.post('/todos/create', formData)
-    console.log(res.data)
+    await api.post('/todos/create', formData)
     
     closeCreateNoteModal()
   }
@@ -35,7 +34,9 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   return (
       <div className="fixed left-0 top-0 w-screen h-screen flex justify-center items-center bg-black/50">
         <form onSubmit={e => mutation.mutate(e)} className="bg-white p-5 flex flex-col space-y-6 w-full md:w-1/2 rounded-lg relative">
-          <button onClick={closeCreateNoteModal} className="absolute right-5 top-5">
+          <h2 className="font-bold text-xl">Criar nota</h2>
+
+          <button onClick={closeCreateNoteModal} className="absolute right-5 top-0">
             <img src="x.svg" />
           </button>
           <div className="space-y-1">
