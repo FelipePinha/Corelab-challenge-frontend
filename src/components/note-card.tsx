@@ -4,6 +4,7 @@ import { queryClient } from "../lib/react-query";
 import { api } from "../lib/axios";
 import { useState } from "react";
 import { EditNoteModal } from "./edit-note-modal";
+import { FavoriteButton } from "./favorite-button";
 
 interface NoteCardProps {
     todo: Todo
@@ -36,13 +37,7 @@ export function NoteCard({todo}: NoteCardProps) {
             <div className="flex flex-col h-80 bg-white rounded-lg shadow-md">
                 <div className="flex justify-between items-center border-b border-b-zinc-400 p-3">
                     <h3 className="font-bold">{todo.title}</h3>
-                    <button>
-                        {todo.favorite ? (
-                            <img src="star_full.svg" alt="Favorito" />
-                        ) : (
-                            <img src="star.svg" alt="Não Favorito" />
-                        )}
-                    </button>
+                    <FavoriteButton favorite={todo.favorite} id={todo.id}/>
                 </div>
 
                 <div className="flex-1 px-4 py-2 overflow-auto">
