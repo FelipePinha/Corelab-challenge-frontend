@@ -5,3 +5,8 @@ export interface Todo {
     id: number
     title: string
 }
+
+export interface TodoError {
+    title: string,
+    description: string
+}

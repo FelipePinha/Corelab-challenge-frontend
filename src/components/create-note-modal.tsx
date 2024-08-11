@@ -3,10 +3,15 @@ import colors from "../utils/color-picker-list"
 import { api } from "../lib/axios"
 import { useMutation } from "@tanstack/react-query"
 import { queryClient } from "../lib/react-query"
+import { isAxiosError } from "axios"
+import { ErrorMessage } from "./error-message"
+import { TodoError } from "../types/todo"
 
 interface CreateNoteModalProps {
     closeCreateNoteModal: () => void
 }
+
+
 
 export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   const [formData, setFormData] = useState({
@@ -15,6 +20,8 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
     color: '#FFFFFF',
     favorite: false
   })
+
+  const [errors, setErrors] = useState<TodoError>()
 
   const mutation = useMutation({
     mutationFn: postTodo,
@@ -26,9 +33,15 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   async function postTodo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    await api.post('/todos/create', formData)
-    
-    closeCreateNoteModal()
+    try {
+      await api.post('/todos/create', formData)
+
+      closeCreateNoteModal()
+    } catch (error) {
+      if(isAxiosError(error)) {
+        setErrors(error?.response?.data.errors)
+      }
+    }
   }
 
   return (
@@ -47,6 +60,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
               className="border-2 px-2 h-10 text-md rounded-md w-full outline-none p-3" 
               placeholder="Título da nota"
             />
+            <ErrorMessage error={errors?.title} />
           </div>
           <div className="flex flex-col space-y-1">
             <label>Descrição</label>
@@ -55,6 +69,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
               className="border-2 px-2 h-36 rounded-md text-md w-full outline-none resize-none p-3" 
               placeholder="conte mais sobre...">
             </textarea>
+            <ErrorMessage error={errors?.description} />
           </div>
 
           <div className="space-y-2">
