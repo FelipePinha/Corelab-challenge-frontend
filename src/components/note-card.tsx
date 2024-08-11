@@ -6,6 +6,7 @@ import { useState } from "react";
 import { EditNoteModal } from "./edit-note-modal";
 import { FavoriteButton } from "./favorite-button";
 import { ColorPicker } from "./color-picker";
+import { clsx } from "clsx";
 
 interface NoteCardProps {
     todo: Todo
@@ -35,8 +36,10 @@ export function NoteCard({todo}: NoteCardProps) {
 
     return (
         <>
-            <div className="flex flex-col h-80 bg-white rounded-lg shadow-md">
-                <div className="flex justify-between items-center border-b border-b-zinc-400 p-3">
+            <div style={{backgroundColor: todo.color}} className='flex flex-col h-80 rounded-lg shadow-md'>
+                <div className={clsx("flex justify-between items-center border-b border-b-zinc-400 p-3", {
+                    'border-b-white': todo.color !== '#FFFFFF',
+                })}>
                     <h3 className="font-bold">{todo.title}</h3>
                     <FavoriteButton favorite={todo.favorite} id={todo.id}/>
                 </div>

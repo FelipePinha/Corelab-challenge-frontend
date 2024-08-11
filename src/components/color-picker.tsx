@@ -3,6 +3,7 @@ import colors from "../utils/color-picker-list"
 import { api } from "../lib/axios"
 import { useMutation } from "@tanstack/react-query"
 import { queryClient } from "../lib/react-query"
+import { clsx } from "clsx"
 
 interface ColorPickerInterface {
     id: number
@@ -36,7 +37,8 @@ export function ColorPicker({id}: ColorPickerInterface) {
     }
 
     async function updateColor() {
-        api.patch(`/todos/${id}/update/color`, {color})
+        await api.patch(`/todos/${id}/update/color`, {color})
+        setIsColorPickerOpen(false)
     }
 
     
@@ -44,7 +46,9 @@ export function ColorPicker({id}: ColorPickerInterface) {
         <div className="relative flex flex-col items-center">
             <button 
                 onClick={toggleColorPicker}
-                className="rounded-full bg-light-yellow size-8 flex justify-center items-center"
+                className={clsx(`rounded-full size-8 flex justify-center items-center`, {
+                    'bg-light-yellow': isColorPickerOpen
+                })}
             >
                 <img src="color_picker.svg" />
             </button>
@@ -52,7 +56,7 @@ export function ColorPicker({id}: ColorPickerInterface) {
             {
                 isColorPickerOpen && (
                     <div className="bg-white shadow-lg rounded-lg border border-zinc-300 absolute top-9 -left-2 w-56 p-5 space-y-5">
-                        <div className="grid grid-cols-4 gap-3">
+                        <div className="grid grid-cols-4 gap-3 justify-items-center">
                             {colors.map(color => (
                                 <label key={color.color_name} htmlFor={color.id} className="cursor-pointer w-12 flex justify-center" >
                                     <input

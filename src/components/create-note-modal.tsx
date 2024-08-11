@@ -11,8 +11,6 @@ interface CreateNoteModalProps {
     closeCreateNoteModal: () => void
 }
 
-
-
 export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   const [formData, setFormData] = useState({
     title: '',
