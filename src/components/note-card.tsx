@@ -5,6 +5,7 @@ import { api } from "../lib/axios";
 import { useState } from "react";
 import { EditNoteModal } from "./edit-note-modal";
 import { FavoriteButton } from "./favorite-button";
+import { ColorPicker } from "./color-picker";
 
 interface NoteCardProps {
     todo: Todo
@@ -49,9 +50,7 @@ export function NoteCard({todo}: NoteCardProps) {
                         <button onClick={openEditNoteModal}>
                             <img src="pencil.svg" />
                         </button>
-                        <button>
-                            <img src="color_picker.svg" />
-                        </button>
+                        <ColorPicker id={todo.id}/>
                     </div>
                     <button onClick={() => mutation.mutate()}>
                         <img src="x.svg" />
