@@ -19,6 +19,9 @@ export default {
         'light-silver': '#CDCDCD',
         'neutral-gray': '#979797',
         'sandy-brown': '#A99A7C'
+      },
+      fontFamily: {
+        sans: 'Inter'
       }
     },
   },
