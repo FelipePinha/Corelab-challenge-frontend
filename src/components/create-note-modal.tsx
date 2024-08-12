@@ -7,6 +7,10 @@ import { isAxiosError } from "axios"
 import { ErrorMessage } from "./error-message"
 import { TodoError } from "../types/todo"
 
+import X from '../assets/x.svg'
+import Star from '../assets/star.svg'
+import StarFull from '../assets/star_full.svg'
+
 interface CreateNoteModalProps {
     closeCreateNoteModal: () => void
 }
@@ -48,7 +52,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
           <h2 className="font-bold text-xl">Criar nota</h2>
 
           <button onClick={closeCreateNoteModal} className="absolute right-5 top-0">
-            <img src="x.svg" />
+            <img src={X} />
           </button>
           <div className="space-y-1">
             <label>Título</label>
@@ -103,8 +107,8 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
                   name="favorite" 
                   id="favorite"
                 />
-                <img src="star.svg" className="peer-checked:hidden"/>
-                <img src="star_full.svg" className="hidden peer-checked:block"/>
+                <img src={Star} className="peer-checked:hidden"/>
+                <img src={StarFull} className="hidden peer-checked:block"/>
               </label>
             </div>
           </div>

@@ -1,12 +1,17 @@
 import { useState } from "react"
-import { CreateNoteModal } from "./components/create-note-modal"
-import { NoteCard } from "./components/note-card"
-import { api } from "./lib/axios"
+import { CreateNoteModal } from "../components/create-note-modal"
+import { NoteCard } from "../components/note-card"
+import { api } from "../lib/axios"
 import { useQuery } from "@tanstack/react-query"
-import { Todo } from "./types/todo"
+import { Todo } from "../types/todo"
+import { Header } from "../components/header"
+import { useSearchParams } from "react-router-dom"
 
-export function App() {
+export function Todos() {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
+  const [searchParams] = useSearchParams()
+
+  const search = searchParams.get('search')
 
   function openCreateNoteModal() {
     setIsCreateNoteModalOpen(true)
@@ -16,31 +21,31 @@ export function App() {
     setIsCreateNoteModalOpen(false)
   }
 
-  async function getTodos() {
+  async function getTodos(search: string | null) {
     const res = await api.get('/todos')
-    const data = res.data
+    const { data } = res.data
 
-    return data.data
+    if(search) {
+      const searchResults = data.filter((todo: Todo) => {
+        return todo.title.toLowerCase().includes(search.toLowerCase())
+      })
+      
+  
+      return searchResults
+    }
+
+    return data
   }
 
-  const { data } = useQuery({
-    queryFn: getTodos,
-    queryKey: ['todos']
+  const { data, isLoading } = useQuery({
+    queryFn: () => getTodos(search),
+    queryKey: ['todos', search]
   })
 
   return (
     <div>
       <div className="space-y-6">
-        <header className="h-14 flex items-center justify-between px-6 bg-white shadow-sm">
-          <div className="flex items-center gap-5 w-[80%]">
-            <img src="logo.svg" />
-            <input type="text" className="border-2 px-2 h-8 rounded-md text-sm w-full outline-none" placeholder="Pesquisar notas"/>
-          </div>
-
-          <div>
-            <img src="x.svg" />
-          </div>
-        </header>
+        <Header />
 
         <main className="max-w-7xl mx-auto space-y-6 p-3">
             <section className="w-full">
@@ -64,6 +69,7 @@ export function App() {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {
+                  !isLoading ?
                   data?.map((todo: Todo) => {
                     if(todo.favorite) {
                       return (
@@ -71,6 +77,10 @@ export function App() {
                       )
                     }
                   })
+                  :
+                  (
+                    <p className="text-xs text-zinc-600">Carregando...</p>
+                  )
                 }
               </div>
             </section>
@@ -79,7 +89,8 @@ export function App() {
               <h2 className="text-zinc-500 text-sm">Outras</h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {
+              {
+                  !isLoading ?
                   data?.map((todo: Todo) => {
                     if(!todo.favorite) {
                       return (
@@ -87,6 +98,10 @@ export function App() {
                       )
                     }
                   })
+                  :
+                  (
+                    <p className="text-xs text-zinc-600">Carregando...</p>
+                  )
                 }
               </div>
             </section>

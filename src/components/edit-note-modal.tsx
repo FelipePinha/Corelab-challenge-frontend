@@ -6,6 +6,8 @@ import { isAxiosError } from "axios"
 import { TodoError } from "../types/todo"
 import { ErrorMessage } from "./error-message"
 
+import X from '../assets/x.svg'
+
 interface CreateNoteModalProps {
     closeEditNoteModal: () => void
     title: string
@@ -47,7 +49,7 @@ export function EditNoteModal({closeEditNoteModal, title, description, id}: Crea
                 <div className="flex justify-between items-center">
                     <h2 className="font-bold text-xl">Editar nota</h2>
                     <button onClick={closeEditNoteModal}>
-                        <img src="x.svg" />
+                        <img src={X} />
                     </button>
                 </div>
 

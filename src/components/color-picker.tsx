@@ -5,6 +5,8 @@ import { useMutation } from "@tanstack/react-query"
 import { queryClient } from "../lib/react-query"
 import { clsx } from "clsx"
 
+import ColorPickerImg from '../assets/color_picker.svg'
+
 interface ColorPickerInterface {
     id: number
 }
@@ -50,7 +52,7 @@ export function ColorPicker({id}: ColorPickerInterface) {
                     'bg-light-yellow': isColorPickerOpen
                 })}
             >
-                <img src="color_picker.svg" />
+                    <img src={ColorPickerImg} />
             </button>
 
             {

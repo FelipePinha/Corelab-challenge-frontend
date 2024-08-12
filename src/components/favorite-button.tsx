@@ -2,6 +2,9 @@ import { useMutation } from "@tanstack/react-query"
 import { queryClient } from "../lib/react-query"
 import { api } from "../lib/axios"
 
+import Star from '../assets/star.svg'
+import StarFull from '../assets/star_full.svg'
+
 interface FavoriteButtonProps {
     id: number
     favorite: boolean
@@ -24,9 +27,9 @@ export function FavoriteButton({id, favorite}: FavoriteButtonProps) {
     return (
         <button onClick={() => mutation.mutate()}>
             {favorite ? (
-                <img src="star_full.svg" alt="Favorito" />
+                <img src={StarFull} alt="Favorito" />
             ) : (
-                <img src="star.svg" alt="Não Favorito" />
+                <img src={Star} alt="Não Favorito" />
             )}
         </button>
     )

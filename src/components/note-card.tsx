@@ -8,6 +8,9 @@ import { FavoriteButton } from "./favorite-button";
 import { ColorPicker } from "./color-picker";
 import { clsx } from "clsx";
 
+import X from '../assets/x.svg'
+import Pencil from '../assets/pencil.svg'
+
 interface NoteCardProps {
     todo: Todo
 }
@@ -45,18 +48,18 @@ export function NoteCard({todo}: NoteCardProps) {
                 </div>
 
                 <div className="flex-1 px-4 py-2 overflow-auto">
-                    <p>{todo.description}</p>
+                    <p className="break-words">{todo.description}</p>
                 </div>
 
                 <div className="flex justify-between items-center px-3 py-2">
                     <div className="flex items-center gap-2">
                         <button onClick={openEditNoteModal}>
-                            <img src="pencil.svg" />
+                            <img src={Pencil} />
                         </button>
                         <ColorPicker id={todo.id}/>
                     </div>
                     <button onClick={() => mutation.mutate()}>
-                        <img src="x.svg" />
+                        <img src={X} />
                     </button>
                 </div>
             </div>
