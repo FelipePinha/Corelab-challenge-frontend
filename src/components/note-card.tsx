@@ -41,7 +41,7 @@ export function NoteCard({todo}: NoteCardProps) {
         <>
             <div style={{backgroundColor: todo.color}} className='flex flex-col h-80 rounded-lg shadow-md'>
                 <div className={clsx("flex justify-between items-center border-b border-b-zinc-400 p-3", {
-                    'border-b-white': todo.color !== '#FFFFFF',
+                    'border-b-slate-50': todo.color !== '#FFFFFF',
                 })}>
                     <h3 className="font-bold">{todo.title}</h3>
                     <FavoriteButton favorite={todo.favorite} id={todo.id}/>

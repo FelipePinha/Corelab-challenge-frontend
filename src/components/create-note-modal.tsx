@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react"
-import colors from "../utils/color-picker-list"
 import { api } from "../lib/axios"
 import { useMutation } from "@tanstack/react-query"
 import { queryClient } from "../lib/react-query"
@@ -10,18 +9,17 @@ import { TodoError } from "../types/todo"
 import X from '../assets/x.svg'
 import Star from '../assets/star.svg'
 import StarFull from '../assets/star_full.svg'
+import { Colors } from "./colors"
 
 interface CreateNoteModalProps {
     closeCreateNoteModal: () => void
 }
 
 export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    color: '#FFFFFF',
-    favorite: false
-  })
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [color, setColor] = useState('#FFFFFF')
+  const [favorite, setFavorite] = useState(false)
 
   const [errors, setErrors] = useState<TodoError>()
 
@@ -35,13 +33,20 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
   async function postTodo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
+    const formData = {
+      title,
+      description,
+      color,
+      favorite
+    }
+
     try {
       await api.post('/todos/create', formData)
 
       closeCreateNoteModal()
     } catch (error) {
       if(isAxiosError(error)) {
-        setErrors(error?.response?.data.errors)
+        setErrors(error.response?.data.errors)
       }
     }
   }
@@ -57,7 +62,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
           <div className="space-y-1">
             <label>Título</label>
             <input
-              onChange={e => setFormData({...formData, title: e.target.value})}
+              onChange={e => setTitle(e.target.value)}
               type="text" 
               className="border-2 px-2 h-10 text-md rounded-md w-full outline-none p-3" 
               placeholder="Título da nota"
@@ -67,7 +72,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
           <div className="flex flex-col space-y-1">
             <label>Descrição</label>
             <textarea
-              onChange={e => setFormData({...formData, description: e.target.value})}
+              onChange={e => setDescription(e.target.value)}
               className="border-2 px-2 h-36 rounded-md text-md w-full outline-none resize-none p-3" 
               placeholder="conte mais sobre...">
             </textarea>
@@ -77,21 +82,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
           <div className="space-y-2">
             <p>Escolha uma cor (opcional)</p>
             <div className="grid grid-cols-6 md:grid-cols-9 lg:grid-cols-12 gap-3">
-              {
-                colors.map(color => (
-                    <label key={color.color_name} htmlFor={color.id} className="cursor-pointer w-12 flex justify-center" >
-                        <input 
-                          onChange={e => setFormData({...formData, color: e.target.value})}
-                          className='hidden peer' 
-                          type="radio" 
-                          name="color-radio" 
-                          id={color.id} 
-                          value={color.color_code}/>
-                        <div style={{backgroundColor: color.color_code}} className="w-10 h-10 rounded-full bg-light-blue peer-checked:ring-2 peer-checked:ring-black peer-checked:ring-offset-1"/>
-                    </label>
-                ))
-              }
-
+              <Colors onChange={event => setColor(event.target.value)}/>
             </div>
           </div>
 
@@ -101,7 +92,7 @@ export function CreateNoteModal({closeCreateNoteModal}: CreateNoteModalProps) {
             <div className="w-6">
               <label htmlFor="favorite" className="cursor-pointer">
                 <input 
-                  onChange={e => setFormData({...formData, favorite: e.target.checked})}
+                  onChange={e => setFavorite(e.target.checked)}
                   className="hidden peer" 
                   type="checkbox" 
                   name="favorite" 

@@ -13,6 +13,7 @@ export function Todos() {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
   const [searchParams] = useSearchParams()
 
+  // get search value from url
   const search = searchParams.get('search')
 
   function openCreateNoteModal() {
@@ -27,6 +28,7 @@ export function Todos() {
     const res = await api.get('/todos')
     const { data } = res.data
 
+    // filter search results if search exists in url
     if(search) {
       const searchResults = data.filter((todo: Todo) => {
         return todo.title.toLowerCase().includes(search.toLowerCase())
@@ -108,7 +110,6 @@ export function Todos() {
               </div>
             </section>
         </main>
-
         
       </div>
       {
