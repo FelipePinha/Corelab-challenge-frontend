@@ -7,6 +7,8 @@ import { Todo } from "../types/todo"
 import { Header } from "../components/header"
 import { useSearchParams } from "react-router-dom"
 
+import Star from '../assets/star.svg'
+
 export function Todos() {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
   const [searchParams] = useSearchParams()
@@ -54,7 +56,7 @@ export function Todos() {
                   <div className="flex item-center justify-between w-full border-b border-b-zinc-400 p-5">
                     <h3 className="font-bold">Título</h3>
 
-                    <img src="star.svg" />
+                    <img src={Star} />
                   </div>
 
                   <div className="text-left p-5">

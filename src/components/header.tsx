@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import Logo from '../assets/logo.svg'
+import SearchImg from '../assets/search.svg'
 
 export function Header() {
     const [searchValue, setSearchValue] = useState('')
@@ -34,7 +36,7 @@ export function Header() {
     return (
         <header className="flex flex-col md:flex-row gap-3 items-center justify-between px-6 py-3 bg-white shadow-sm">
           <div className="flex flex-col md:flex-row items-center gap-5 w-full md:w-[80%]">
-            <img src="logo.svg" />
+            <img src={Logo} />
             <input 
                 onChange={changeSearchValue}
                 type="text" 
@@ -50,7 +52,7 @@ export function Header() {
                 className='text-white tracking-wide bg-zinc-900 w-32 py-1.5 rounded-md flex items-center gap-3 justify-center'
             >
                 Filtrar
-                <img src="search.svg" />
+                <img src={SearchImg} />
             </button>
           </div>
         </header>
