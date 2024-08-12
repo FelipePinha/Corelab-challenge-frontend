@@ -4,7 +4,9 @@
 
 - Criei todo o layout responsivo da página.
 
-- Instalei o "Tanstack/react-query" e o Axios, fiz a configuração inicial na pasta lib, em seguida fiz as requisições.
+- Criei uma modal para criar nota e outra para editar.
+
+- Instalei o "Tanstack/react-query" e o Axios, fiz a configuração inicial na pasta lib, em seguida fiz as requisições para a API.
 
 - Separei as responsabilidades de cada requisição em componentes.
 
